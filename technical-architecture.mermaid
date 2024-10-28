@@ -1,0 +1,73 @@
+flowchart TD
+    subgraph Input_Sources[Input Data Sources]
+        TI[Thermal Imaging Sensor\n- Temperature Distribution\n- Heat Patterns\n- Thermal Anomalies]
+        MI[Microscopic Imaging\n- Tissue Structure\n- Cell Patterns\n- Morphological Features]
+        UI[User Input Module\n- Symptoms\n- Physical Changes\n- Medical History]
+    end
+
+    subgraph Data_Processing[Data Processing Pipeline]
+        direction TB
+        PP[Preprocessing Module\n- Image Normalization\n- Noise Reduction\n- Artifact Removal]
+        FE[Feature Extraction\n- ROI Detection\n- Pattern Recognition\n- Morphological Analysis]
+        TS[Time Series Analysis\n- Temporal Changes\n- Pattern Evolution\n- Growth Rate]
+    end
+
+    subgraph ML_Pipeline[ML Analysis System]
+        direction TB
+        IC[Image Classification\n- CNN Architecture\n- Transfer Learning]
+        AD[Anomaly Detection\n- Statistical Analysis\n- Pattern Deviation]
+        RA[Risk Assessment\n- Multimodal Fusion\n- Probabilistic Modeling]
+    end
+
+    subgraph Data_Storage[Data Management]
+        direction TB
+        DR[(Primary Database\n- Patient Records\n- Image Data\n- Analysis Results)]
+        TS_DB[(Time Series DB\n- Historical Data\n- Change Patterns)]
+        Cache[[Cache Layer\n- Recent Results\n- Frequent Patterns]]
+    end
+
+    subgraph Analysis_Engine[Diagnostic Engine]
+        direction TB
+        CF[Data Fusion Module\n- Multimodal Integration\n- Feature Correlation]
+        CM[Comparative Analysis\n- Historical Comparison\n- Trend Analysis]
+        DM[Decision Module\n- Risk Stratification\n- Recommendation Engine]
+    end
+
+    TI & MI --> PP
+    UI --> FE
+    PP --> FE
+    FE --> TS
+    
+    FE --> IC
+    TS --> AD
+    IC & AD --> RA
+    
+    RA --> CF
+    DR --> CM
+    TS_DB --> CM
+    CF --> CM
+    CM --> DM
+    
+    DM --> Output{Result Generation}
+    Output -->|High Risk| Alert[Emergency Alert System]
+    Output -->|Medium Risk| Rec[Recommendation System]
+    Output -->|Low Risk| Report[Report Generator]
+    
+    Output --> DR
+    Output --> TS_DB
+    Output --> Cache
+    
+    CM --> Cache
+    Cache --> CM
+
+    classDef sensor fill:#f9f9ff,stroke:#333,stroke-width:2px
+    classDef process fill:#f0f0f0,stroke:#666,stroke-width:2px
+    classDef storage fill:#e6ffe6,stroke:#333,stroke-width:2px
+    classDef ml fill:#fff5e6,stroke:#333,stroke-width:2px
+    classDef output fill:#ffe6e6,stroke:#333,stroke-width:2px
+    
+    class TI,MI,UI sensor
+    class PP,FE,TS,CF,CM,DM process
+    class DR,TS_DB,Cache storage
+    class IC,AD,RA ml
+    class Output,Alert,Rec,Report output
